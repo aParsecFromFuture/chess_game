@@ -259,11 +259,11 @@ void chess_notation(chess_board b, int x1, int y1, int x2, int y2, char *notatio
         
         if(b[x2][y2] == EMPTY){
             notation[i++] = 'a' + x2;
-            notation[i++] = '0' + y2;
+            notation[i++] = '1' + y2;
         }else{
             notation[i++] = 'x';
             notation[i++] = 'a' + x2;
-            notation[i++] = '0' + y2;
+            notation[i++] = '1' + y2;
         }
     }
     notation[i] = 0;
