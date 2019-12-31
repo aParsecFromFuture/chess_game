@@ -111,13 +111,15 @@ gboolean on_button_press(GtkWidget *w, GdkEventButton *event, gpointer data)
 
 void on_switch_button_state_set(GtkSwitch *s)
 {
-    gboolean t = gtk_switch_get_state(s);
-    if(t){
+    switch(opponent){
+        case WHITE :
         opponent = BLACK;
         gtk_label_set_text(GTK_LABEL(switch_label),(gchar*)"WHITE");
-    }else{
+        break;
+        case BLACK :
         opponent = WHITE;
         gtk_label_set_text(GTK_LABEL(switch_label),(gchar*)"BLACK");
+        break;
     }
 }
 
