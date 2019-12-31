@@ -4,9 +4,12 @@
 
 GtkBuilder *builder;
 GtkWidget *window, *draw_area, *switch_label, *history_table;
+GtkTextBuffer *buffer;
+
 cairo_surface_t* icon[13];
 chess_board board;
 int from[2], to[2], is_picked = 0, depth = 1, opponent = BLACK, iteration = 1;
+char notation[10] = {0};
 
 gboolean on_board_draw(GtkWidget*, cairo_t*, gpointer);
 gboolean on_button_press(GtkWidget*, GdkEventButton*, gpointer);
@@ -22,6 +25,7 @@ int main(int argc, char **argv)
     draw_area = GTK_WIDGET(gtk_builder_get_object(builder, "draw_area"));
     switch_label = GTK_WIDGET(gtk_builder_get_object(builder, "switch_label"));
     history_table = GTK_WIDGET(gtk_builder_get_object(builder, "game_history_table"));
+    buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(history_table));
     
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), 0);
     
@@ -80,20 +84,27 @@ gboolean on_board_draw(GtkWidget *widget, cairo_t *cr, gpointer data)
 
 gboolean on_button_press(GtkWidget *w, GdkEventButton *event, gpointer data)
 {
-    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(history_table));
-    char notation[10] = "";
-    
     if(is_picked){
         to[0] = (int)(event->x / 60);
         to[1] = (int)(event->y / 60);
         chess_notation(board, from[0], from[1], to[0], to[1], LAST_MOVEMENT);
         if(chess_play_2(board, from[0], from[1], to[0], to[1])){
-            sprintf(notation, "%d. %s\t", iteration, LAST_MOVEMENT);
-            gtk_text_buffer_insert_at_cursor(buffer, notation, -1);
-            chess_play_ai(board, opponent, depth);
-            sprintf(notation, "%s\n",LAST_MOVEMENT);
+            switch(opponent){
+                case WHITE :
+                sprintf(notation, "%s\n",LAST_MOVEMENT);
+                case BLACK :
+                sprintf(notation, "%d. %s\t", iteration, LAST_MOVEMENT);
+            }
             gtk_text_buffer_insert_at_cursor(buffer, notation, -1);
             
+            chess_play_ai(board, opponent, depth);
+            switch(opponent){
+                case WHITE :
+                sprintf(notation, "%d. %s\t", iteration, LAST_MOVEMENT);
+                case BLACK :
+                sprintf(notation, "%s\n",LAST_MOVEMENT);
+            }
+            gtk_text_buffer_insert_at_cursor(buffer, notation, -1);
             iteration++;
         }
         gtk_widget_queue_draw(draw_area);
@@ -115,12 +126,19 @@ void on_switch_button_state_set(GtkSwitch *s)
         case WHITE :
         opponent = BLACK;
         gtk_label_set_text(GTK_LABEL(switch_label),(gchar*)"WHITE");
+        chess_play_ai(board, opponent, depth);
+        sprintf(notation, "%s\n",LAST_MOVEMENT);
+        gtk_text_buffer_insert_at_cursor(buffer, notation, -1);
         break;
         case BLACK :
         opponent = WHITE;
         gtk_label_set_text(GTK_LABEL(switch_label),(gchar*)"BLACK");
+        chess_play_ai(board, opponent, depth);
+        sprintf(notation, "%d. %s\t",iteration, LAST_MOVEMENT);
+        gtk_text_buffer_insert_at_cursor(buffer, notation, -1);
         break;
     }
+    gtk_widget_queue_draw(draw_area);
 }
 
 void on_scale_button_value_changed(GtkRange *r)
