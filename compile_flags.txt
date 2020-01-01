@@ -6,7 +6,7 @@
 -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed
 -I/usr/include/x86_64-linux-gnu
 -I/usr/include
--I/home/grey/Public/codelite_workspace/chess_game
+-I/home/grey/Documents/codelite_workspace/chess_game
 -I/usr/include/gtk-3.0
 -I/usr/include/at-spi2-atk/2.0
 -I/usr/include/at-spi-2.0

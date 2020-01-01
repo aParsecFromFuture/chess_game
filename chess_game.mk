@@ -5,15 +5,15 @@
 ## Debug
 ProjectName            :=chess_game
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/grey/Public/codelite_workspace
-ProjectPath            :=/home/grey/Public/codelite_workspace/chess_game
+WorkspacePath          :=/home/grey/Documents/codelite_workspace
+ProjectPath            :=/home/grey/Documents/codelite_workspace/chess_game
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=grey sky
-Date                   :=12/31/19
+Date                   :=01/02/20
 CodeLitePath           :=/home/grey/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -91,19 +91,15 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/main.c$(ObjectSuffix): main.c $(IntermediateDirectory)/main.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/grey/Public/codelite_workspace/chess_game/main.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/main.c$(DependSuffix): main.c
+$(IntermediateDirectory)/main.c$(ObjectSuffix): main.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.c$(ObjectSuffix) -MF$(IntermediateDirectory)/main.c$(DependSuffix) -MM main.c
-
+	$(CC) $(SourceSwitch) "/home/grey/Documents/codelite_workspace/chess_game/main.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/main.c$(PreprocessSuffix): main.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.c$(PreprocessSuffix) main.c
 
-$(IntermediateDirectory)/chess.c$(ObjectSuffix): chess.c $(IntermediateDirectory)/chess.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/grey/Public/codelite_workspace/chess_game/chess.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/chess.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/chess.c$(DependSuffix): chess.c
+$(IntermediateDirectory)/chess.c$(ObjectSuffix): chess.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/chess.c$(ObjectSuffix) -MF$(IntermediateDirectory)/chess.c$(DependSuffix) -MM chess.c
-
+	$(CC) $(SourceSwitch) "/home/grey/Documents/codelite_workspace/chess_game/chess.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/chess.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/chess.c$(PreprocessSuffix): chess.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/chess.c$(PreprocessSuffix) chess.c
 
