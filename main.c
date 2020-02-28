@@ -112,7 +112,7 @@ gboolean on_button_press(GtkWidget *w, GdkEventButton *event, gpointer data)
     }else{
         from[0] = (int)(event->x / 60);
         from[1] = (int)(event->y / 60);
-        if(value[board[from[0]][from[1]]] * opponent < 0){
+        if(color[board[from[0]][from[1]]] * opponent < 0){
             gtk_widget_queue_draw(draw_area);
             is_picked = 1;
         }
@@ -145,3 +145,4 @@ void on_scale_button_value_changed(GtkRange *r)
 {
     depth = (int)gtk_range_get_value(r);
 }
+
